@@ -1,15 +1,16 @@
-﻿using Domain.Common;
+﻿using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain
+namespace Application.Features.Category.Queries.GetDetail
 {
-	public class Category : BaseEntity
+	public class CategoryDetailDto
 	{
-		public string? Name { get; set; }
+        public int Id { get; set; }
+        public string? Name { get; set; }
 		public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
 	}
 }
