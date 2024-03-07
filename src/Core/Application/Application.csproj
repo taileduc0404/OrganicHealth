@@ -11,9 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Category\Commands\Create\" />
-    <Folder Include="Features\Category\Commands\Delete\" />
-    <Folder Include="Features\Category\Commands\Update\" />
     <Folder Include="Features\Product\Commands\" />
     <Folder Include="Features\Product\Queries\" />
   </ItemGroup>

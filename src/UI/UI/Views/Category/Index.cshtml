@@ -1,0 +1,23 @@
+﻿@using UI.ViewModels
+@model List<CategoryVM>
+
+
+<h2>Danh mục</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Tên</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.Id</td>
+                <td>@category.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
