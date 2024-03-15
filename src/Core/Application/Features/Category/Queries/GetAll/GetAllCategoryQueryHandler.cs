@@ -23,13 +23,16 @@ namespace Application.Features.Category.Queries.GetAll
 
 		public async Task<List<CategoryDto>> Handle(GetAllCategoryQuery request, CancellationToken cancellationToken)
 		{
-			var allCategory = await _categoryRepository.GetAsync();
+			try
+			{
+                var allCategory = await _categoryRepository.GetAsync();
 
-		
-			var data = _mapper.Map<List<CategoryDto>>(allCategory);
-
-
-			return data;
+                return _mapper.Map<List<CategoryDto>>(allCategory);
+            }
+			catch (Exception)
+			{
+				throw;
+			}	
 		}
 	}
 }
