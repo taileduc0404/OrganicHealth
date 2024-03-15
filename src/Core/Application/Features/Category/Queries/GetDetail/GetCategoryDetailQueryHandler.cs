@@ -1,4 +1,5 @@
 ﻿using Application.Contracts.Persistences;
+using Application.Exceptions;
 using AutoMapper;
 using MediatR;
 
@@ -19,16 +20,13 @@ namespace Application.Features.Category.Queries.GetDetail
 
         public async Task<CategoryDetailDto> Handle(GetCategoryDetailQuery request, CancellationToken cancellationToken)
         {
-            try
+            var category = await _categoryRepository.GetByIdAsync(request.Id);
+            if (category is not null)
             {
-                var category = await _categoryRepository.GetByIdAsync(request.Id);
 
                 return _mapper.Map<CategoryDetailDto>(category);
             }
-            catch (Exception)
-            {
-                throw;
-            }
+            throw new NotFoundException(nameof(Category), request.Id);
         }
     }
 }

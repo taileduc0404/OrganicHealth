@@ -1,4 +1,5 @@
 ﻿using Application.Contracts.Persistences;
+using Application.Exceptions;
 using AutoMapper;
 using MediatR;
 using System;
@@ -25,12 +26,13 @@ namespace Application.Features.Category.Commands.Delete
         {
             var findCategory = await _categoryRepository.GetByIdAsync(request.Id);
 
-            if (findCategory != null)
+            if (findCategory is null)
             {
-                await _categoryRepository.DeleteAsync(findCategory);
-                return findCategory.Id;
+                throw new NotFoundException(nameof(Category), request.Id);
+                
             }
-            return 0;
+            await _categoryRepository.DeleteAsync(findCategory);
+            return findCategory.Id;
         }
     }
 }

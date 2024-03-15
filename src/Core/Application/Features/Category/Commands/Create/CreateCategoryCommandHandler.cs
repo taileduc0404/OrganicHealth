@@ -1,4 +1,5 @@
 ﻿using Application.Contracts.Persistences;
+using Application.Exceptions;
 using Application.Features.Category.Queries.GetAll;
 using AutoMapper;
 using Domain;
@@ -26,6 +27,12 @@ namespace Application.Features.Category.Commands.Create
 
         public async Task<int> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
+            var validator = new CreateCategoryCommandValidator(_categoryRepository);
+            var validationResult = await validator.ValidateAsync(request);
+            if (validationResult.Errors.Any())
+            {
+                throw new BadRequestException("Invalid Category.", validationResult);
+            }
             var categoryToCreate = _mapper.Map<Domain.Category>(request);
             if (categoryToCreate != null)
             {

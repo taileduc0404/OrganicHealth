@@ -39,16 +39,8 @@ namespace Persistence.Repositories
 		public async Task<T> GetByIdAsync(int id)
 		{
 			var entity = await _context.Set<T>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-			if (entity == null)
-			{
-				throw new Exception($"Not Found {id}");
-			}
-			else
-			{
-
-				return entity;
-			}
-		}
+            return entity!;
+        }
 
 		public async Task UpdateAsync(T entity)
 		{
