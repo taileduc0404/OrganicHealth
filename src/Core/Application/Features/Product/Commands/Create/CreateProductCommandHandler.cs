@@ -1,4 +1,5 @@
 ﻿using Application.Contracts.Persistences;
+using Application.Exceptions;
 using AutoMapper;
 using MediatR;
 using System;
@@ -22,6 +23,12 @@ namespace Application.Features.Product.Commands.Create
         }
         public async Task<Domain.Product> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
+            var validator = new CreateProductCommandValidator(_productRepository);
+            var validationResult = validator.Validate(request);
+            if (validationResult.Errors.Any()) {
+                throw new BadRequestException("Product Invalid", validationResult);
+            }
+
             var product = _mapper.Map<Domain.Product>(request);
             if(product != null) { 
                 await _productRepository.CreateAsync(product);
@@ -29,7 +36,7 @@ namespace Application.Features.Product.Commands.Create
             }
             else
             {
-                return null!;
+                throw new NotFoundException(nameof(Product), request);
             }
         }
     }
