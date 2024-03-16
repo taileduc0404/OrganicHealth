@@ -28,7 +28,17 @@ namespace Application.Features.Category.Queries.GetAll
             if (allCategory is not null)
             {
 
-                return _mapper.Map<List<CategoryDto>>(allCategory);
+                var categoryDtos = _mapper.Map<List<CategoryDto>>(allCategory);
+
+
+                foreach (var category in categoryDtos)
+                {
+                    var products = await _categoryRepository.GetProductsByCategoryIdAsync(category.Id);
+
+                    category.Products = products.Any() == true ? products.ToList() : null!;
+                }
+
+                return categoryDtos;
             }
             throw new NotFoundException(nameof(Category), request);
         }
