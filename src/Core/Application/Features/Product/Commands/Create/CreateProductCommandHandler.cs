@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Product.Commands.Create
 {
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Domain.Product>
+    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, string>
     {
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
@@ -21,7 +21,7 @@ namespace Application.Features.Product.Commands.Create
             _productRepository = productRepository;
             _mapper = mapper;
         }
-        public async Task<Domain.Product> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             var validator = new CreateProductCommandValidator(_productRepository);
             var validationResult = validator.Validate(request);
@@ -29,14 +29,14 @@ namespace Application.Features.Product.Commands.Create
                 throw new BadRequestException("Product Invalid", validationResult);
             }
 
-            var product = _mapper.Map<Domain.Product>(request);
-            if(product != null) { 
-                await _productRepository.CreateAsync(product);
-                return product;
+
+            if(request != null) { 
+                await _productRepository.AddAsync(request);
+                return "Thêm thành công";
             }
             else
             {
-                throw new NotFoundException(nameof(Product), request);
+                throw new NotFoundException(nameof(Product), request!);
             }
         }
     }

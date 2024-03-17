@@ -36,7 +36,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody] CreateProductCommand command)
+        public async Task<ActionResult> Create([FromForm] CreateProductCommand command)
         {
             var response = await _mediator.Send(command);
             return Ok(response);
