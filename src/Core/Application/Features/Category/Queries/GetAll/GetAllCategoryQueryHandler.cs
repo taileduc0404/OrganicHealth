@@ -35,7 +35,9 @@ namespace Application.Features.Category.Queries.GetAll
                 {
                     var products = await _categoryRepository.GetCategoryListWithProductAsync(category.Id);
 
-                    category.Products = products.Any() == true ? products.ToList() : null!;
+                    //category.Products = products.Any() == true ? products.ToList() : null!;
+                    category.Products = products.Any() == true ? products.Select(p => _mapper.Map<Domain.Product>(p)).ToList() : null!;
+
                 }
 
                 return categoryDtos;

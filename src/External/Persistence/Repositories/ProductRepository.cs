@@ -70,10 +70,10 @@ namespace Persistence.Repositories
         }
 
 
-        public Task<bool> DeleteAsyncWithPicture(int id)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<bool> DeleteAsyncWithPicture(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public async Task<IEnumerable<ProductDto>> GetAll()
         {

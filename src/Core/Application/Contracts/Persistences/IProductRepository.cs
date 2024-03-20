@@ -13,6 +13,6 @@ namespace Application.Contracts.Persistences
         //Task<bool> AddAsync(AddProductDto dto);
         Task<bool> UpdateProductWithImageAsync(int id, UpdateProductCommand dto);
         //Task<bool> UpdateAsync(int id, UpdateProductDto dto);
-        Task<bool> DeleteAsyncWithPicture(int id);
+        //Task<bool> DeleteAsyncWithPicture(int id);
     }
 }
