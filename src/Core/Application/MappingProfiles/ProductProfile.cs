@@ -12,11 +12,16 @@ namespace Application.MappingProfiles
     {
         public ProductProfile()
         {
-            CreateMap<ProductDto, Product>().ReverseMap();
-            //CreateMap<Product, ProductDto>()
-            //    .ForMember(x => x.CategoryId, a => a.MapFrom(s => s.CategoryId))
-            //    .ForMember(x => x.ProductPicture, a => a.MapFrom<ProductPictureUrlResolver>())
-            //    .ReverseMap();
+            CreateMap<Product, ProductDto>()
+                .ForMember(x => x.CategoryId, a => a.MapFrom(s => s.CategoryId))
+                .ForMember(x => x.ProductPicture, a => a.MapFrom<ProductPictureUrlResolver>())
+                .ReverseMap();
+
+            CreateMap<Product, ProductDetailDto>()
+                .ForMember(x => x.CategoryId, a => a.MapFrom(s => s.CategoryId))
+                .ForMember(x => x.ProductPicture, a => a.MapFrom<ProductDetailPictureUrlResolver>())
+                .ReverseMap();
+                
             CreateMap<Product, ProductDetailDto>().ReverseMap();
             CreateMap<CreateProductCommand, Product>().ReverseMap();
             CreateMap<UpdateProductCommand, Product>().ReverseMap();

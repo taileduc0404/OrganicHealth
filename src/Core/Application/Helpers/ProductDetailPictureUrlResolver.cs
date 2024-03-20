@@ -1,21 +1,25 @@
-﻿using AutoMapper;
-using Application.Features.Product.Queries.GetDetail;
+﻿using Application.Features.Product.Queries.GetDetail;
+using AutoMapper;
 using Domain;
 using Microsoft.Extensions.Configuration;
-using Application.Features.Product.Queries.GetAll;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Application.Helpers
 {
-    public class ProductPictureUrlResolver : IValueResolver<Product, ProductDto, string>
+    public class ProductDetailPictureUrlResolver : IValueResolver<Product, ProductDetailDto, string>
     {
         private readonly IConfiguration _configuration;
 
-        public ProductPictureUrlResolver(IConfiguration configuration)
+        public ProductDetailPictureUrlResolver(IConfiguration configuration)
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
-        public string Resolve(Product source, ProductDto destination, string destMember, ResolutionContext context)
+        public string Resolve(Product source, ProductDetailDto destination, string destMember, ResolutionContext context)
         {
             if (!string.IsNullOrEmpty(source.ProductPicture))
             {

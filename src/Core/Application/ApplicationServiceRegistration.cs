@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,13 @@ using System.Threading.Tasks;
 
 namespace Application
 {
-	public static class ApplicationServiceRegistration
-	{
-		public static IServiceCollection AddApplicationService(this IServiceCollection services)
-		{
-			services.AddMediatR(Assembly.GetExecutingAssembly());
-			services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
-			return services;
-		}
-	}
+    public static class ApplicationServiceRegistration
+    {
+        public static IServiceCollection AddApplicationService(this IServiceCollection services)
+        {
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            return services;
+        }
+    }
 }
