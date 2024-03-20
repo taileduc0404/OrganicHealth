@@ -23,8 +23,12 @@ namespace Application.Features.Category.Queries.GetDetail
             var category = await _categoryRepository.GetByIdAsync(request.Id);
             if (category is not null)
             {
+                var categoryDetail = _mapper.Map<CategoryDetailDto>(category);
 
-                return _mapper.Map<CategoryDetailDto>(category);
+                categoryDetail.Products = await _categoryRepository.GetCategoryDetailWithProductAsync(request.Id);
+
+                return categoryDetail;
+                //return _mapper.Map<CategoryDetailDto>(category);
             }
             throw new NotFoundException(nameof(Category), request.Id);
         }

@@ -31,7 +31,7 @@ namespace Application.Features.Product.Commands.Create
 
 
             if(request != null) { 
-                await _productRepository.AddAsync(request);
+                await _productRepository.Product_AddAsync(request);
                 return "Thêm thành công";
             }
             else

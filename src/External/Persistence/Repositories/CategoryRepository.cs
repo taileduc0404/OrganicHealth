@@ -19,7 +19,10 @@ namespace Persistence.Repositories
             this._context = context;
         }
 
-        public async Task<List<Product>> GetProductsByCategoryIdAsync(int categoryId)
+        public async Task<List<Product>> GetCategoryDetailWithProductAsync(int categoryId)
+        => await _context.products.Where(x => x.CategoryId == categoryId).ToListAsync();
+
+        public async Task<List<Product>> GetCategoryListWithProductAsync(int categoryId)
         => await _context.products.Where(x => x.CategoryId == categoryId).ToListAsync();
     }
 }

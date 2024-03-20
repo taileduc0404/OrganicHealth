@@ -12,7 +12,7 @@ namespace Application.Features.Product.Commands.Create
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .NotNull()
                 .MaximumLength(50).WithMessage("{PropertyName} phải nhỏ hơn 50 ký tự.")
-                .MinimumLength(5).WithMessage("{PropertyName} phải lớn hơn 5 ký tự.");
+                .MinimumLength(3).WithMessage("{PropertyName} phải lớn hơn 3 ký tự.");
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .NotNull()

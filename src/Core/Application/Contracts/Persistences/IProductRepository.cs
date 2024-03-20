@@ -9,7 +9,7 @@ namespace Application.Contracts.Persistences
 	{
         Task<IEnumerable<ProductDto>> GetAll();
         //Task<IEnumerable<ProductDto>> GetAll(ProductParams productParams);
-        Task<bool> AddAsync(CreateProductCommand dto);
+        Task<bool> Product_AddAsync(CreateProductCommand dto);
         //Task<bool> AddAsync(AddProductDto dto);
         Task<bool> UpdateAsync(int id);
         //Task<bool> UpdateAsync(int id, UpdateProductDto dto);

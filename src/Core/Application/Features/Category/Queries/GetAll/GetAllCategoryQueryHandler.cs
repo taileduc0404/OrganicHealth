@@ -33,7 +33,7 @@ namespace Application.Features.Category.Queries.GetAll
 
                 foreach (var category in categoryDtos)
                 {
-                    var products = await _categoryRepository.GetProductsByCategoryIdAsync(category.Id);
+                    var products = await _categoryRepository.GetCategoryListWithProductAsync(category.Id);
 
                     category.Products = products.Any() == true ? products.ToList() : null!;
                 }

@@ -1,10 +1,8 @@
-﻿using Application.Features.Category.Commands.Create;
-using Application.Features.Product.Commands.Create;
+﻿using Application.Features.Product.Commands.Create;
 using Application.Features.Product.Commands.Delete;
 using Application.Features.Product.Commands.Update;
 using Application.Features.Product.Queries.GetAll;
 using Application.Features.Product.Queries.GetDetail;
-using Azure;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,8 +47,8 @@ namespace API.Controllers
             return Ok(response);
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Update([FromBody] UpdateProductCommand command)
+        [HttpPut]
+        public async Task<ActionResult> Update([FromForm] UpdateProductCommand command)
         {
             var response = await _mediator.Send(command);
             return Ok(response);
