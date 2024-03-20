@@ -6,6 +6,7 @@ using AutoMapper;
 using Application.Features.Product.Queries.GetAll;
 using Microsoft.EntityFrameworkCore;
 using Application.Features.Product.Commands.Create;
+using Application.Features.Product.Commands.Update;
 
 namespace Persistence.Repositories
 {
@@ -73,7 +74,7 @@ namespace Persistence.Repositories
         {
             throw new NotImplementedException();
         }
-            
+
         public async Task<IEnumerable<ProductDto>> GetAll()
         {
             var products = await _context.products
@@ -81,14 +82,57 @@ namespace Persistence.Repositories
                 .AsNoTracking()
                 .ToListAsync();
 
-            var res = _mapper.Map<IEnumerable<ProductDto>>(products);
+            var res = _mapper.Map<List<ProductDto>>(products);
 
             return res;
         }
 
-        public Task<bool> UpdateAsync(int id)
+        public async Task<bool> UpdateProductWithImageAsync(int id, UpdateProductCommand dto)
         {
-            throw new NotImplementedException();
+            var currentProduct = await _context.products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            //var currentProduct = await _context.products.FindAsync(id);
+            if (currentProduct is not null)
+            {
+
+                var src = "";
+                if (dto.ProductPicture is not null)
+                {
+                    var root = "/images/products/";
+                    var productName = $"{Guid.NewGuid()}" + dto.ProductPicture.FileName;
+                    if (!Directory.Exists("wwwroot" + root))
+                    {
+                        Directory.CreateDirectory("wwwroot" + root);
+                    }
+
+                    src = root + productName;
+                    var picInfo = _fileProvider.GetFileInfo(src);
+                    var rootPath = picInfo.PhysicalPath;
+                    using (var fileStream = new FileStream(rootPath!, FileMode.Create))
+                    {
+                        await dto.ProductPicture!.CopyToAsync(fileStream);
+                    }
+                }
+                //remove old picture
+                if (!string.IsNullOrEmpty(currentProduct.ProductPicture))
+                {
+                    //delete old picture
+                    var picInfo = _fileProvider.GetFileInfo(currentProduct.ProductPicture);
+                    var rootPath = picInfo.PhysicalPath;
+                    System.IO.File.Delete(rootPath!);
+                }
+
+                //update product
+                var res = _mapper.Map(dto, currentProduct);
+                res.ProductPicture = src;
+                res.Id = id;
+                _context.products.Update(res);
+                await _context.SaveChangesAsync();
+
+
+                return true;
+
+            }
+            return false;
         }
     }
 }

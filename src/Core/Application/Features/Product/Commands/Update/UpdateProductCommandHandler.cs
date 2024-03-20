@@ -27,8 +27,7 @@ namespace Application.Features.Product.Commands.Update
                 var productFind = await _productRepository.GetByIdAsync(request.Id);
                 if (productFind != null)
                 {
-                    var res = _mapper.Map(request, productFind);
-                    await _productRepository.UpdateAsync(res);
+                    await _productRepository.UpdateProductWithImageAsync(request.Id, request);
                     return "Cập nhật thành công";
                 }
                 else

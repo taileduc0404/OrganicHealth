@@ -6,7 +6,7 @@ using Application.Features.Product.Queries.GetAll;
 
 namespace Application.Helpers
 {
-    public class ProductPictureUrlResolver : IValueResolver<Product, ProductDto, string>
+    public class ProductPictureUrlResolver : IValueResolver<Product, ProductDto, string?>
     {
         private readonly IConfiguration _configuration;
 
@@ -15,7 +15,7 @@ namespace Application.Helpers
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
-        public string Resolve(Product source, ProductDto destination, string destMember, ResolutionContext context)
+        public string Resolve(Product source, ProductDto destination, string? destMember, ResolutionContext context)
         {
             if (!string.IsNullOrEmpty(source.ProductPicture))
             {

@@ -1,4 +1,4 @@
-using Application;
+﻿using Application;
 using Microsoft.Extensions.FileProviders;
 using Persistence;
 
@@ -13,6 +13,17 @@ builder.Services.AddApplicationService();
 builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(
     Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")
     ));
+
+//enable CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", pol =>
+    {
+        pol.AllowAnyHeader()
+        .AllowAnyMethod()
+        .WithOrigins("https://localhost:44338");
+    });
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -29,6 +40,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles(); //cho phép truy cập các tệp tĩnh từ wwwroot, chẳng hạn như xem hình ảnh
+
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 

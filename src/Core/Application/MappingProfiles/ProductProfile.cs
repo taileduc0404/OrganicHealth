@@ -18,11 +18,9 @@ namespace Application.MappingProfiles
                 .ReverseMap();
 
             CreateMap<Product, ProductDetailDto>()
-                .ForMember(x => x.CategoryId, a => a.MapFrom(s => s.CategoryId))
                 .ForMember(x => x.ProductPicture, a => a.MapFrom<ProductDetailPictureUrlResolver>())
                 .ReverseMap();
-                
-            CreateMap<Product, ProductDetailDto>().ReverseMap();
+
             CreateMap<CreateProductCommand, Product>().ReverseMap();
             CreateMap<UpdateProductCommand, Product>().ReverseMap();
         }

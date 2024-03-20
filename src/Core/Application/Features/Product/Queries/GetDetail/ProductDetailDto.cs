@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,6 @@ namespace Application.Features.Product.Queries.GetDetail
         public decimal Price { get; set; }
         public string? ProductPicture { get; set; }
         public int CategoryId { get; set; }
-        public virtual Domain.Category? Category { get; set; }
+        //public virtual Domain.Category? Category { get; set; }
     }
 }

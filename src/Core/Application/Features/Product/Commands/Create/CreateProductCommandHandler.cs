@@ -28,8 +28,6 @@ namespace Application.Features.Product.Commands.Create
             if (validationResult.Errors.Any()) {
                 throw new BadRequestException("Product Invalid", validationResult);
             }
-
-
             if(request != null) { 
                 await _productRepository.Product_AddAsync(request);
                 return "Thêm thành công";
