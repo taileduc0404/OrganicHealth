@@ -1,5 +1,4 @@
-﻿using Application.DTOs.ProductDtos;
-using Application.Features.Product.Commands.Create;
+﻿using Application.Features.Product.Commands.Create;
 using Application.Features.Product.Queries.GetAll;
 using Domain;
 
