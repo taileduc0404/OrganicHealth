@@ -1,4 +1,7 @@
 ﻿using Application;
+using Application.Models.Identity;
+using Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using Persistence;
 
@@ -8,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddPersistenceService(builder.Configuration);
 builder.Services.AddApplicationService();
+builder.Services.AddIdentityServices(builder.Configuration);
 
 //Configure IFileProvider
 builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(
@@ -44,6 +48,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles(); //cho phép truy cập các tệp tĩnh từ wwwroot, chẳng hạn như xem hình ảnh
 
 app.UseCors("CorsPolicy");
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

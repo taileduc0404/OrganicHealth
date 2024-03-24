@@ -1,11 +1,7 @@
 ﻿using Identity.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Identity.Context
 {
@@ -17,7 +13,6 @@ namespace Identity.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(typeof(IdentityDbContext).Assembly);
         }

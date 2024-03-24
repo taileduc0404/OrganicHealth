@@ -10,7 +10,7 @@ namespace Application.Models.Identity
     public class RegisterRequest
     {
         [Required]
-        [MinLength(6)]
+        [MinLength(3)]
         public string? Username { get; set; }
         [Required]
         public string? FirstName { get; set; }

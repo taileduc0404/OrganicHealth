@@ -10,6 +10,9 @@ namespace Application.Identity
     public interface IAuthService
     {
         Task<AuthResponse> Login(AuthRequest request);
-        Task<RegisterResponse> Register(RegisterResponse request);
+        Task<RegisterResponse> Register(RegisterRequest request);
+        Task<RegisterResponse> RegisterAdmin(RegisterRequest request);
+        Task<string> Logout();
+
     }
 }

@@ -4,6 +4,7 @@ using Application.Features.Product.Commands.Update;
 using Application.Features.Product.Queries.GetAll;
 using Application.Features.Product.Queries.GetDetail;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -20,6 +21,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<List<ProductDto>> GetAll()
         {
             var response = await _mediator.Send(new GetAllProductQuery());
@@ -40,7 +42,7 @@ namespace API.Controllers
             return Ok(response);
         }
 
-        [HttpDelete] 
+        [HttpDelete]
         public async Task<ActionResult> Delete([FromQuery] int id)
         {
             var response = await _mediator.Send(new DeleteProductCommand { ProductId = id });
