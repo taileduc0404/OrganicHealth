@@ -1,11 +1,6 @@
 ﻿using Application.Contracts.Persistences;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.Product.Commands.Update
 {
@@ -36,7 +31,7 @@ namespace Application.Features.Product.Commands.Update
                 }
             }
             catch (Exception) { throw; }
-            
+
         }
     }
 }

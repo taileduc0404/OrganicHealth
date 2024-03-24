@@ -1,8 +1,7 @@
-﻿using AutoMapper;
-using Application.Features.Product.Queries.GetDetail;
+﻿using Application.Features.Product.Queries.GetAll;
+using AutoMapper;
 using Domain;
 using Microsoft.Extensions.Configuration;
-using Application.Features.Product.Queries.GetAll;
 
 namespace Application.Helpers
 {

@@ -3,7 +3,6 @@ using Application.Features.Category.Commands.Delete;
 using Application.Features.Category.Commands.Update;
 using Application.Features.Category.Queries.GetAll;
 using Application.Features.Category.Queries.GetDetail;
-using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

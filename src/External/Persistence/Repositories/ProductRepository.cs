@@ -1,12 +1,12 @@
 ﻿using Application.Contracts.Persistences;
-using Domain;
-using Persistence.Context;
-using Microsoft.Extensions.FileProviders;
-using AutoMapper;
-using Application.Features.Product.Queries.GetAll;
-using Microsoft.EntityFrameworkCore;
 using Application.Features.Product.Commands.Create;
 using Application.Features.Product.Commands.Update;
+using Application.Features.Product.Queries.GetAll;
+using AutoMapper;
+using Domain;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
+using Persistence.Context;
 
 namespace Persistence.Repositories
 {

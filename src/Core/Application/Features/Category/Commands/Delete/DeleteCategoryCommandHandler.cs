@@ -2,11 +2,6 @@
 using Application.Exceptions;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.Category.Commands.Delete
 {
@@ -29,7 +24,7 @@ namespace Application.Features.Category.Commands.Delete
             if (findCategory is null)
             {
                 throw new NotFoundException(nameof(Category), request.Id);
-                
+
             }
             await _categoryRepository.DeleteAsync(findCategory);
             return findCategory.Id;

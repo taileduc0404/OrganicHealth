@@ -5,8 +5,8 @@ using Domain;
 
 namespace Application.Contracts.Persistences
 {
-	public interface IProductRepository : IGenericRepository<Product>
-	{
+    public interface IProductRepository : IGenericRepository<Product>
+    {
         Task<IEnumerable<ProductDto>> GetAll();
         //Task<IEnumerable<ProductDto>> GetAll(ProductParams productParams);
         Task<bool> Product_AddAsync(CreateProductCommand dto);

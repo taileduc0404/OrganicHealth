@@ -22,6 +22,7 @@ namespace Identity.Services
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly JwtSettings _jwtSettings;
 
+
         public AuthServices(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
             IHttpContextAccessor httpContextAccessor,
             SignInManager<ApplicationUser> signInManager,
@@ -32,6 +33,7 @@ namespace Identity.Services
             _httpContextAccessor = httpContextAccessor;
             _signInManager = signInManager;
             _jwtSettings = jwtSettings.Value;
+
         }
 
         public async Task<AuthResponse> Login(AuthRequest request)
@@ -49,7 +51,7 @@ namespace Identity.Services
             {
                 throw new BadRequestException($"Credentials for '{request.Username}' aren't valid.");
             }
-
+            var expirationTime = DateTime.Now.AddSeconds(40);
             JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
 
             var response = new AuthResponse
@@ -58,6 +60,7 @@ namespace Identity.Services
                 Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
                 Email = user.Email,
                 Username = user.UserName
+
             };
 
             return response;
@@ -71,8 +74,8 @@ namespace Identity.Services
             // Xóa cookie hiện tại
             await _httpContextAccessor.HttpContext!.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            return "Đăng xuất thành công";
 
+            return "Đăng xuất thành công";
         }
 
         public async Task<RegisterResponse> Register(RegisterRequest request)
@@ -195,7 +198,7 @@ namespace Identity.Services
                issuer: _jwtSettings.Issuer,
                audience: _jwtSettings.Audience,
                claims: claims,
-               expires: DateTime.Now.AddMinutes(_jwtSettings.DurationInMinutes),
+               expires: DateTime.Now.AddSeconds(_jwtSettings.DurationInMinutes),
                signingCredentials: signingCredentials);
 
             return jwtSecurityToken;

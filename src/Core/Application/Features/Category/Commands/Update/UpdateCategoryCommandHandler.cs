@@ -19,8 +19,9 @@ namespace Application.Features.Category.Commands.Update
         public async Task<Unit> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
             var validator = new UpdateCategoryCommandValidator(_categoryRepository);
-            var validationResult= validator.Validate(request);
-            if (validationResult.Errors.Any()) {
+            var validationResult = validator.Validate(request);
+            if (validationResult.Errors.Any())
+            {
                 throw new BadRequestException("Category Invalid", validationResult);
             }
 

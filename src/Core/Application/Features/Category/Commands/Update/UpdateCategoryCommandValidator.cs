@@ -3,11 +3,12 @@ using FluentValidation;
 
 namespace Application.Features.Category.Commands.Update
 {
-    public class UpdateCategoryCommandValidator:AbstractValidator<UpdateCategoryCommand>
+    public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCommand>
     {
         private readonly ICategoryRepository _categoryRepository;
 
-        public UpdateCategoryCommandValidator(ICategoryRepository categoryRepository) {
+        public UpdateCategoryCommandValidator(ICategoryRepository categoryRepository)
+        {
             RuleFor(x => x.Name)
                    .NotEmpty().WithMessage("{PropertyName} is required.")
                    .NotNull()

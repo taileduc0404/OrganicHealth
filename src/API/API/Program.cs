@@ -1,7 +1,5 @@
 ﻿using Application;
-using Application.Models.Identity;
 using Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using Persistence;
 

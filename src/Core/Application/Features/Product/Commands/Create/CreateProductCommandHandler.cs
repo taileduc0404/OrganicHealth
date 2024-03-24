@@ -2,11 +2,6 @@
 using Application.Exceptions;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.Product.Commands.Create
 {
@@ -25,10 +20,12 @@ namespace Application.Features.Product.Commands.Create
         {
             var validator = new CreateProductCommandValidator(_productRepository);
             var validationResult = validator.Validate(request);
-            if (validationResult.Errors.Any()) {
+            if (validationResult.Errors.Any())
+            {
                 throw new BadRequestException("Product Invalid", validationResult);
             }
-            if(request != null) { 
+            if (request != null)
+            {
                 await _productRepository.Product_AddAsync(request);
                 return "Thêm thành công";
             }

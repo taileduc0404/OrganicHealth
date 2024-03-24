@@ -1,14 +1,9 @@
 ﻿using Application.Contracts.Persistences;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.Category.Commands.Create
 {
-    public class CreateCategoryCommandValidator:AbstractValidator<CreateCategoryCommand>
+    public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
     {
         private readonly ICategoryRepository _categoryRepository;
 

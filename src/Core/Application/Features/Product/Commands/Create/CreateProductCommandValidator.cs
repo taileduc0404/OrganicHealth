@@ -24,7 +24,7 @@ namespace Application.Features.Product.Commands.Create
                 .GreaterThan(1000).WithMessage("{PropertyName} phải lớn hơn 1000")
                 .LessThanOrEqualTo(100000).WithMessage("{PropertyName} phải nhỏ hơn hoặc bằng 100000");
 
-               
+
             _productRepository = productRepository;
         }
     }

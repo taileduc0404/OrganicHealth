@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using Application.Features.Product.Queries.GetDetail;
+﻿using Application.Features.Product.Queries.GetDetail;
+using AutoMapper;
 using Domain;
 using Microsoft.Extensions.Configuration;
 

@@ -1,11 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.Features.Product.Queries.GetDetail
+﻿namespace Application.Features.Product.Queries.GetDetail
 {
     public class ProductDetailDto
     {
