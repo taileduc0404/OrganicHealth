@@ -51,7 +51,7 @@ namespace Identity.Services
             {
                 throw new BadRequestException($"Credentials for '{request.Username}' aren't valid.");
             }
-            var expirationTime = DateTime.Now.AddSeconds(40);
+            //var expirationTime = DateTime.Now.AddSeconds(40);
             JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
 
             var response = new AuthResponse
@@ -171,6 +171,8 @@ namespace Identity.Services
             //    );
 
             //return token;
+
+
             var userClaims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);
 

@@ -43,7 +43,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseStaticFiles(); //cho phép truy cập các tệp tĩnh từ wwwroot, chẳng hạn như xem hình ảnh
+app.UseStaticFiles(); //cho phép truy cập các tệp tĩnh từ wwwroot, truy xuất hình ảnh
 
 app.UseCors("CorsPolicy");
 
