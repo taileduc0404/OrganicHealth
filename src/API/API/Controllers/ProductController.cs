@@ -3,6 +3,7 @@ using Application.Features.Product.Commands.Delete;
 using Application.Features.Product.Commands.Update;
 using Application.Features.Product.Queries.GetAll;
 using Application.Features.Product.Queries.GetDetail;
+using Application.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,9 +23,11 @@ namespace API.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public async Task<List<ProductDto>> GetAll()
+        public async Task<List<ProductDto>> GetAll([FromQuery] ProductParams productParams)
         {
             var response = await _mediator.Send(new GetAllProductQuery());
+            
+
             return response!;
         }
 

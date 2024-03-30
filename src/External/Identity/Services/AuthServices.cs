@@ -51,13 +51,15 @@ namespace Identity.Services
             {
                 throw new BadRequestException($"Credentials for '{request.Username}' aren't valid.");
             }
-            //var expirationTime = DateTime.Now.AddSeconds(40);
-            JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
+
+            //JwtSecurityToken jwtSecurityToken = await GenerateTokenAsync(user);   cách 1
+            var jwtSecurityToken = await GenerateTokenAsync(user);         //cách 2
 
             var response = new AuthResponse
             {
                 Id = user.Id,
-                Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
+                //Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
+                Token = jwtSecurityToken,
                 Email = user.Email,
                 Username = user.UserName
 
@@ -146,7 +148,8 @@ namespace Identity.Services
             }
         }
 
-        private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)
+        //private async Task<JwtSecurityToken> GenerateTokenAsync(ApplicationUser user)
+        private async Task<string> GenerateTokenAsync(ApplicationUser user)
         {
             //var userRoles = await _userManager.GetRolesAsync(user);
 
@@ -173,37 +176,63 @@ namespace Identity.Services
             //return token;
 
 
-            var userClaims = await _userManager.GetClaimsAsync(user);
+            //var userClaims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);
 
-            var roleClaims = roles.Select(q => new Claim(ClaimTypes.Role, q)).ToList();
+
+
+            //var roleClaims = roles.Select(q => new Claim(ClaimTypes.Role, q)).ToList();   cách 1
+            // lệnh tương đương var roleClaims = roles.Select(q => new Claim(ClaimTypes.Role, q)).ToList();
+            // lấy ra 1 danh sách các roles chuyển đổi thành 1 danh sách claim mới
+
+            //cách 2
+            var roleClaims = new List<Claim>();
+
+            foreach (var role in roles)
+            {
+                //tạo 1 claim mới với kiểu là Role, giá trị là role
+                var claim = new Claim(ClaimTypes.Role, role);
+                //Add các claim vừa tạo có trong danh sách rols vào roleClaims
+                roleClaims.Add(claim);  
+            }
+
 
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName!),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email!),
-                new Claim("uid", user.Id)
-            }
-            .Union(userClaims)
-            .Union(roleClaims);
+                new Claim("User Id", user.Id),
+                new Claim("First Name", user.FirstName!),
+                new Claim("Last Name", user.LastName!)
 
+            }
+            //.Union(userClaims)
+            .Union(roleClaims); // dùng onion để kết hợp roleClaims vào mảng claims
+
+
+            // khóa bảo mật được lấy trong config (appsettings.cs)
             var key_JWTSettings = _jwtSettings.Key;
 
+            // chuyển đổi khóa bảo mật thành marng byte, dùng mã háo utf8
             var key = Encoding.UTF8.GetBytes(key_JWTSettings!);
 
+            // tạo 1 đối tượng SymmetricSecurityKey mới từ mã bảo mật để cấu hình cho xác thực
             var symmetricSecurityKey = new SymmetricSecurityKey(key);
 
+            // tạo chữ ký với cấu hình symmetricSecurityKey và thuật toán HmacSha256
             var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
+            //tạo biến lưu trữ các thông tin token
             var jwtSecurityToken = new JwtSecurityToken(
                issuer: _jwtSettings.Issuer,
                audience: _jwtSettings.Audience,
                claims: claims,
-               expires: DateTime.Now.AddSeconds(_jwtSettings.DurationInMinutes),
+               expires: DateTime.Now.AddHours(_jwtSettings.DurationInMinutes),
                signingCredentials: signingCredentials);
 
-            return jwtSecurityToken;
+            var response= new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+            return response;
         }
     }
 }

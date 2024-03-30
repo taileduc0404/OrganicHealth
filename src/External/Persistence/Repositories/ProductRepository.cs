@@ -2,6 +2,7 @@
 using Application.Features.Product.Commands.Create;
 using Application.Features.Product.Commands.Update;
 using Application.Features.Product.Queries.GetAll;
+using Application.Shared;
 using AutoMapper;
 using Domain;
 using Microsoft.EntityFrameworkCore;
@@ -75,16 +76,27 @@ namespace Persistence.Repositories
         //    throw new NotImplementedException();
         //}
 
-        public async Task<IEnumerable<ProductDto>> GetAll()
+        public async Task<IEnumerable<ProductDto>> GetAll(ProductParams productParams)
         {
-            var products = await _context.products
+            var query = await _context.products
                 .Include(p => p.CategoryId)
                 .AsNoTracking()
                 .ToListAsync();
 
-            var res = _mapper.Map<List<ProductDto>>(products);
 
+            //sort
+            if (!string.IsNullOrEmpty(productParams.Sort))
+            {
+                query = productParams.Sort switch
+                {
+                    "PriceAsync" => query.OrderBy(x => x.Price).ToList(),
+                    "PriceDesc" => query.OrderByDescending(x => x.Price).ToList(),
+                    _ => query.OrderBy(x => x.Name).ToList(),
+                };
+            }
+            var res = _mapper.Map<List<ProductDto>>(query);
             return res;
+
         }
 
         public async Task<bool> UpdateProductWithImageAsync(int id, UpdateProductCommand dto)
