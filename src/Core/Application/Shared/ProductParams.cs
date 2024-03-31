@@ -9,7 +9,7 @@ namespace Application.Shared
     public class ProductParams
     {
         public int MaxPageSize { get; set; } = 10;
-        private int _pageSize = 3;
+        private int _pageSize = 5;
 
         public int PageSize
         {
@@ -19,13 +19,13 @@ namespace Application.Shared
 
 
         public string? Sort { get; set; }
-        public int CatgegoryId { get; set; }
+        public int? CategoryId { get; set; }
         public int PageNumber { get; set; } = 1;
-        private string? _search;
+        private string _search = "";
         public string Search
         {
-            get { return _search!; }
-            set { _search = value.ToString(); }
+            get { return _search; }
+            set { _search = value.ToLower(); }
         }
 
     }

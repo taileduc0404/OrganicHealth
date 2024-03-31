@@ -79,10 +79,21 @@ namespace Persistence.Repositories
         public async Task<IEnumerable<ProductDto>> GetAll(ProductParams productParams)
         {
             var query = await _context.products
-                .Include(p => p.CategoryId)
+                //.Include(p => p.CategoryId)
                 .AsNoTracking()
                 .ToListAsync();
 
+            //search by name
+            if (!string.IsNullOrEmpty(productParams.Search))
+            {
+                query = query.Where(x => x.Name!.ToLower().Contains(productParams.Search)).ToList();
+            }
+
+            //search by categoryId
+            if (productParams.CategoryId.HasValue)
+            {
+                query = query.Where(x => x.CategoryId == productParams.CategoryId).ToList();
+            }
 
             //sort
             if (!string.IsNullOrEmpty(productParams.Sort))
@@ -94,6 +105,10 @@ namespace Persistence.Repositories
                     _ => query.OrderBy(x => x.Name).ToList(),
                 };
             }
+
+            //pagination
+            query = query.Skip((productParams.PageSize) * (productParams.PageNumber - 1)).Take(productParams.PageSize).ToList();
+
             var res = _mapper.Map<List<ProductDto>>(query);
             return res;
 
