@@ -29,7 +29,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> GetAll([FromQuery] ProductParams productParams)
         {
             //var response = await _mediator.Send(new GetAllProductQuery());
