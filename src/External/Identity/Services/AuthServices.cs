@@ -5,6 +5,7 @@ using Identity.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -151,41 +152,10 @@ namespace Identity.Services
         //private async Task<JwtSecurityToken> GenerateTokenAsync(ApplicationUser user)
         private async Task<string> GenerateTokenAsync(ApplicationUser user)
         {
-            //var userRoles = await _userManager.GetRolesAsync(user);
-
-            //var authClaims = new List<Claim>
-            //{
-            //    new Claim(ClaimTypes.Name, user.UserName!),
-            //    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            //};
-
-            //foreach (var userRole in userRoles)
-            //{
-            //    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-            //}
-
-            //var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Key"]!));
-            //var signingCredentials = new SigningCredentials(authSigningKey, SecurityAlgorithms.Sha256);
-            //var token = new JwtSecurityToken(
-            //    issuer: _jwtSettings.Issuer,
-            //    audience: _jwtSettings.Audience,
-            //    expires: DateTime.Now.AddMinutes(_jwtSettings.DurationInMinutes),
-            //    signingCredentials: signingCredentials
-            //    );
-
-            //return token;
-
-
+            
             //var userClaims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);
 
-
-
-            //var roleClaims = roles.Select(q => new Claim(ClaimTypes.Role, q)).ToList();   cách 1
-            // lệnh tương đương var roleClaims = roles.Select(q => new Claim(ClaimTypes.Role, q)).ToList();
-            // lấy ra 1 danh sách các roles chuyển đổi thành 1 danh sách claim mới
-
-            //cách 2
             var roleClaims = new List<Claim>();
 
             foreach (var role in roles)
@@ -234,5 +204,5 @@ namespace Identity.Services
             var response= new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
             return response;
         }
-    }
+	}
 }
